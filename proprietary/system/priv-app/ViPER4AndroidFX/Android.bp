@@ -1,0 +1,100 @@
+//
+// ViPER4AndroidFX - Audio Effects Engine
+// SPDX-License-Identifier: GPL-3.0
+//
+
+// APK приложения
+android_app_import {
+    name: "ViPER4AndroidFX",
+    apk: "ViPER4AndroidFX.apk",
+    presigned: true,
+    preprocessed: true,
+    dex_preopt: {
+        enabled: false,
+    },
+    privileged: false,
+    product_specific: true,
+    required: ["libv4a_re"],
+}
+
+// Audio effect библиотека
+cc_library_shared {
+    name: "libv4a_re",
+    vendor: true,
+
+    srcs: [
+        // Main
+        "ViPERFX/src/viper/ViPER.cpp",
+        "ViPERFX/src/ViPER4Android.cpp",
+        "ViPERFX/src/ViperContext.cpp",
+
+        // Effects
+        "ViPERFX/src/viper/effects/AnalogX.cpp",
+        "ViPERFX/src/viper/effects/ColorfulMusic.cpp",
+        "ViPERFX/src/viper/effects/Convolver.cpp",
+        "ViPERFX/src/viper/effects/Cure.cpp",
+        "ViPERFX/src/viper/effects/DiffSurround.cpp",
+        "ViPERFX/src/viper/effects/DynamicSystem.cpp",
+        "ViPERFX/src/viper/effects/FETCompressor.cpp",
+        "ViPERFX/src/viper/effects/IIRFilter.cpp",
+        "ViPERFX/src/viper/effects/PlaybackGain.cpp",
+        "ViPERFX/src/viper/effects/Reverberation.cpp",
+        "ViPERFX/src/viper/effects/SoftwareLimiter.cpp",
+        "ViPERFX/src/viper/effects/SpeakerCorrection.cpp",
+        "ViPERFX/src/viper/effects/SpectrumExtend.cpp",
+        "ViPERFX/src/viper/effects/TubeSimulator.cpp",
+        "ViPERFX/src/viper/effects/VHE.cpp",
+        "ViPERFX/src/viper/effects/ViPERBass.cpp",
+        "ViPERFX/src/viper/effects/ViPERClarity.cpp",
+        "ViPERFX/src/viper/effects/ViPERDDC.cpp",
+
+        // Utils
+        "ViPERFX/src/viper/utils/AdaptiveBuffer.cpp",
+        "ViPERFX/src/viper/utils/Biquad.cpp",
+        "ViPERFX/src/viper/utils/CAllpassFilter.cpp",
+        "ViPERFX/src/viper/utils/CCombFilter.cpp",
+        "ViPERFX/src/viper/utils/CRevModel.cpp",
+        "ViPERFX/src/viper/utils/Crossfeed.cpp",
+        "ViPERFX/src/viper/utils/DepthSurround.cpp",
+        "ViPERFX/src/viper/utils/DynamicBass.cpp",
+        "ViPERFX/src/viper/utils/FIR.cpp",
+        "ViPERFX/src/viper/utils/Harmonic.cpp",
+        "ViPERFX/src/viper/utils/HiFi.cpp",
+        "ViPERFX/src/viper/utils/HighShelf.cpp",
+        "ViPERFX/src/viper/utils/IIR_1st.cpp",
+        "ViPERFX/src/viper/utils/IIR_NOrder_BW_BP.cpp",
+        "ViPERFX/src/viper/utils/IIR_NOrder_BW_LH.cpp",
+        "ViPERFX/src/viper/utils/MinPhaseIIRCoeffs.cpp",
+        "ViPERFX/src/viper/utils/MultiBiquad.cpp",
+        "ViPERFX/src/viper/utils/NoiseSharpening.cpp",
+        "ViPERFX/src/viper/utils/PassFilter.cpp",
+        "ViPERFX/src/viper/utils/PConvSingle.cpp",
+        "ViPERFX/src/viper/utils/PolesFilter.cpp",
+        "ViPERFX/src/viper/utils/Polyphase.cpp",
+        "ViPERFX/src/viper/utils/Stereo3DSurround.cpp",
+        "ViPERFX/src/viper/utils/Subwoofer.cpp",
+        "ViPERFX/src/viper/utils/TimeConstDelay.cpp",
+        "ViPERFX/src/viper/utils/WaveBuffer.cpp",
+    ],
+
+    local_include_dirs: [
+        "ViPERFX/src/include",
+    ],
+
+    cflags: [
+        "-flto",
+        "-O3",
+        "-DNDEBUG",
+        "-DVERSION_CODE=800",
+        "-DVERSION_NAME=\"8.0\"",
+        "-Wall",
+        "-Wextra",
+        "-Wno-unused-parameter",
+    ],
+
+    shared_libs: [
+        "liblog",
+    ],
+
+    relative_install_path: "soundfx",
+}
